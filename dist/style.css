@@ -1,0 +1,204 @@
+body, h1, h2, h3, p, ul, ol, li, figure, figcaption, blockquote, dl, dd {
+    margin: 0;
+    padding: 0;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+button {
+    border: none;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(https://images.unsplash.com/photo-1517524285303-d6fc683dddf8?q=80&w=2448&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+    background-size: cover;
+    min-height: 100vh;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.main-container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 1fr 5fr;
+    height: 95vh;
+    width: 95vw;
+    max-width: 1100px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background-color: #69995D;
+    grid-column: 1/3;
+    color: white;
+}
+
+.nav {
+    display: flex;
+    font-size: 1.3rem;
+    padding: 1.5rem;
+    background-color: #fdf6e8;
+    flex-direction: column;
+}
+
+.main-content {
+    display: flex;
+    background-color: white;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 15px;
+    padding: 25px;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-item button {
+    display: flex;
+    margin-bottom: 20px;
+    padding: 5px;
+    font-size: large;
+}
+
+.nav-item button:hover,
+.project-list:hover,
+.add-project:hover {
+    transform: translateY(-5px);
+    cursor: pointer;
+    background-color: #c7e3c1;
+}
+
+.project-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.project-button{
+    display: flex;
+    align-items: center;
+}
+
+.delete-project-button{
+    display: flex;
+    justify-content: flex-start;
+    padding: 5px;
+    background-color: red;
+    color: white;
+    border-radius: 8px;
+    width: 50px;
+    margin-left: 4px;
+
+    
+}
+
+.hide-input {
+    display: none;
+}
+
+.add-project {
+    display: flex;
+    color: #323431;
+    font-size: 1.1rem;
+}
+
+#project-name {
+    width: 50%;
+}
+
+.project-button {
+    display: flex;
+    padding: 5px;
+    font-size: large;
+}
+
+.project-button:hover, .add-todo-task:hover {
+    transform: translateY(-5px);
+    cursor: pointer;
+}
+
+.add-button, .cancel-button {
+    padding: 5px;
+}
+
+.add-button {
+    margin-right: 10px;
+}
+
+h3 {
+    margin-bottom: 15px;
+}
+
+#taskForm {
+    width: 100px;
+    border: 2px solid black;
+}
+
+#taskForm input, textarea {
+    width: 90%;
+}
+
+form input, textarea{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-bottom: 4px;
+}
+
+.add-task-form form{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 37%;
+}
+
+.to-do-div{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    border: 2px solid #323431;
+    align-items: flex-end;
+    padding: 6px;
+}
+
+.priority-low{
+    background-color: #69995D;
+}
+
+.delete-task{
+    border: solid black 2px;
+    border-radius: 20px;
+    width: 27px;
+    height: 27px;
+    color: rgb(244, 92, 92);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bolder;
+}
+
+.delete-task:hover{
+    transform: translateY(-1px);
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
