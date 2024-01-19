@@ -13,6 +13,46 @@ import { format } from 'date-fns';
     this.weekList = [];
   }
 
+  createProjectButton(project) {
+    const projectButton = document.createElement('button');
+    projectButton.textContent = project.name;
+    projectButton.className = project.name;
+    projectButton.classList.add('project-button');
+    return projectButton;
+  }
+
+ 
+  createDeleteButton(projectName, projectButton) {
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.className = 'delete-project-button';
+
+    deleteButton.addEventListener('click', () => {
+      this.deleteProject(projectName);
+      projectButton.remove();
+      deleteButton.remove();
+    });
+
+    return deleteButton;
+  }
+
+  selectProject(projectButton) {
+    const projectName = projectButton.textContent;
+    this.selectedProject = this.projectList.find(project => project.name === projectName);
+  }
+
+  createDeleteTaskButton(toDoDiv) {
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'X';
+    deleteButton.className = 'delete-task';
+
+    deleteButton.addEventListener('click', () => {
+      this.deleteTask(toDoDiv);
+    });
+
+    return deleteButton;
+  }
+
 
   createProjectNameInput() {
     const projectNameDiv = document.createElement('div');
@@ -75,19 +115,22 @@ handleProjectButtonClick() {
           const newProject = new Project(capitalizedProjectName);
           this.projectList.push(newProject);
 
-          const projectButton = document.createElement('button');
-          projectButton.textContent = newProject.name;
-          projectButton.className = newProject.name;
-          projectButton.classList.add('project-button');
-
-          
-          const deleteButton = document.createElement('button');
-          deleteButton.textContent = 'Delete';
-          deleteButton.className = 'delete-project-button';
-
-          
+          const projectButton = this.createProjectButton(newProject);
+          const deleteButton = this.createDeleteButton(capitalizedProjectName, projectButton);
+      
           projectContainer.appendChild(projectButton);
           projectContainer.appendChild(deleteButton);
+      
+          deleteButton.addEventListener('click', () => {
+            this.deleteProject(capitalizedProjectName);
+            projectButton.remove();
+            deleteButton.remove(); 
+          });
+      
+          this.selectedProject = newProject;
+      
+          projectNameInput.value = '';
+          projectNameDiv.classList.add('hide-input');
 
           
           deleteButton.addEventListener('click', () => {
@@ -122,8 +165,7 @@ handleProjectButtonClick() {
       const projectButton = event.target.closest('.project-button');
 
       if (projectButton) {
-        const projectName = projectButton.textContent;
-        this.selectedProject = this.projectList.find(project => project.name === projectName);
+        this.selectProject(projectButton);
 
         mainContent.innerHTML = '';
 
@@ -412,6 +454,8 @@ createToDoTaskElement(task) {
   toDoDiv.appendChild(title);
   toDoDiv.appendChild(description);
   toDoDiv.appendChild(dueDate);
+  toDoDiv.appendChild(this.createDeleteTaskButton(toDoDiv));
+
 
   delTask.addEventListener('click', () => {
     this.deleteTask();
