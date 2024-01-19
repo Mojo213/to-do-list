@@ -39,16 +39,13 @@ import { format } from 'date-fns';
   selectProject(projectButton) {
     const projectName = projectButton.textContent;
     this.selectedProject = this.projectList.find(project => project.name === projectName);
+
   }
 
   createDeleteTaskButton(toDoDiv) {
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'X';
     deleteButton.className = 'delete-task';
-
-    deleteButton.addEventListener('click', () => {
-      this.deleteTask(toDoDiv);
-    });
 
     return deleteButton;
   }
@@ -424,13 +421,11 @@ displayWeekTodoTasks() {
 
 createToDoTaskElement(task) {
   const toDoDiv = document.createElement('div');
-  const delTask = document.createElement('button');
   const title = document.createElement('div');
   const description = document.createElement('div');
   const dueDate = document.createElement('div');
 
   toDoDiv.className = 'to-do-div';
-  delTask.className = 'delete-task';
   title.className = 'to-do-header';
   description.className = 'to-do-description';
   dueDate.className = 'due-date';
@@ -440,29 +435,29 @@ createToDoTaskElement(task) {
 
   const dueDateValue = new Date(task.dueDate);
   if (!isNaN(dueDateValue.getTime())) {
-      
-      dueDate.textContent = this.formatDate(dueDateValue);
+    dueDate.textContent = this.formatDate(dueDateValue);
   } else {
-      
-      dueDate.textContent = task.dueDate;
+    dueDate.textContent = task.dueDate;
   }
 
-  delTask.textContent = 'X';
   toDoDiv.style.backgroundColor = this.setPriorityColor(task.priority);
 
-  toDoDiv.appendChild(delTask);
   toDoDiv.appendChild(title);
   toDoDiv.appendChild(description);
   toDoDiv.appendChild(dueDate);
-  toDoDiv.appendChild(this.createDeleteTaskButton(toDoDiv));
 
+  
+  const deleteButton = this.createDeleteTaskButton(toDoDiv);
 
-  delTask.addEventListener('click', () => {
-    this.deleteTask();
+  deleteButton.addEventListener('click', () => {
+    this.deleteTask(toDoDiv);
   });
   
+  toDoDiv.appendChild(deleteButton);
+
   return toDoDiv;
 }
+
 
   deleteTask(){
   const mainContent = document.querySelector('.main-content');
