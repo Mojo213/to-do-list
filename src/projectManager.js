@@ -31,7 +31,7 @@ import { format } from 'date-fns';
       this.deleteProject(projectName);
       projectButton.remove();
       deleteButton.remove();
-      console.log(this.projectList);
+
     });
 
     return deleteButton;
@@ -456,14 +456,14 @@ createToDoTaskElement(task) {
       const indexOfProjectTask =  project.toDoList.findIndex((Task) => Task.title === taskTitle);
       if (indexOfProjectTask !== -1) {
         project.removeTodoItem(indexOfProjectTask);
-        console.log(this.taskList)
+
       }
     }
 
     if (indexOfItem !== -1) {
          this.taskList.splice(indexOfItem, 1);
          toDoDiv.remove();
-         console.log(this.taskList)
+         
       } 
      
     }
