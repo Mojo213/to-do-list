@@ -31,6 +31,7 @@ import { format } from 'date-fns';
       this.deleteProject(projectName);
       projectButton.remove();
       deleteButton.remove();
+      console.log(this.projectList);
     });
 
     return deleteButton;
@@ -118,26 +119,8 @@ handleProjectButtonClick() {
           projectContainer.appendChild(projectButton);
           projectContainer.appendChild(deleteButton);
       
-          deleteButton.addEventListener('click', () => {
-            this.deleteProject(capitalizedProjectName);
-            projectButton.remove();
-            deleteButton.remove(); 
-          });
-      
           this.selectedProject = newProject;
       
-          projectNameInput.value = '';
-          projectNameDiv.classList.add('hide-input');
-
-          
-          deleteButton.addEventListener('click', () => {
-            this.deleteProject(capitalizedProjectName);
-            projectButton.remove();
-            deleteButton.remove(); 
-          });
-
-          this.selectedProject = newProject;
-
           projectNameInput.value = '';
           projectNameDiv.classList.add('hide-input');
           
@@ -450,9 +433,9 @@ createToDoTaskElement(task) {
   const deleteButton = this.createDeleteTaskButton(toDoDiv);
 
   deleteButton.addEventListener('click', () => {
-    this.deleteTask(toDoDiv);
+    this.deleteTask();
   });
-  
+
   toDoDiv.appendChild(deleteButton);
 
   return toDoDiv;
@@ -473,12 +456,14 @@ createToDoTaskElement(task) {
       const indexOfProjectTask =  project.toDoList.findIndex((Task) => Task.title === taskTitle);
       if (indexOfProjectTask !== -1) {
         project.removeTodoItem(indexOfProjectTask);
+        console.log(this.taskList)
       }
     }
 
     if (indexOfItem !== -1) {
          this.taskList.splice(indexOfItem, 1);
          toDoDiv.remove();
+         console.log(this.taskList)
       } 
      
     }
