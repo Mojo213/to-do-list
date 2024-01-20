@@ -43,7 +43,7 @@ import { format } from 'date-fns';
 
   }
 
-  createDeleteTaskButton(toDoDiv) {
+  createDeleteTaskButton() {
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'X';
     deleteButton.className = 'delete-task';
@@ -430,7 +430,7 @@ createToDoTaskElement(task) {
   toDoDiv.appendChild(dueDate);
 
   
-  const deleteButton = this.createDeleteTaskButton(toDoDiv);
+  const deleteButton = this.createDeleteTaskButton();
 
   deleteButton.addEventListener('click', () => {
     this.deleteTask();
