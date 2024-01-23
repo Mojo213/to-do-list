@@ -52,8 +52,6 @@ import { format } from 'date-fns';
       });
     }
   }
-  
-  
 
   refreshUI() {
     this.updateProjectListUI();
@@ -73,7 +71,6 @@ import { format } from 'date-fns';
     });
   }
   
-
 
   createProjectButton(project) {
     const projectButton = document.createElement('button');
@@ -186,9 +183,6 @@ handleProjectButtonClick() {
     }
   });
 }
-
-
-
 
   handleProjectClick() {
     const projectContainer = document.querySelector('.project-container');
@@ -357,8 +351,6 @@ handleProjectButtonClick() {
     });
   }
 
-
-
   setPriorityColor(priority) {
     switch (priority) {
       case 'Low':
@@ -456,8 +448,6 @@ displayWeekTodoTasks() {
   });
 }
 
-
-
 createToDoTaskElement(task) {
   const toDoDiv = document.createElement('div');
   toDoDiv.className = 'to-do-div';
@@ -498,8 +488,7 @@ createDeleteTaskButton() {
   return deleteButton;
 }
 
-
-  deleteTask(){
+deleteTask(){
   const mainContent = document.querySelector('.main-content');
 
   mainContent.addEventListener('click', (event)=>{
@@ -553,8 +542,6 @@ createDueDateInput(dueDateValue, task) {
 
   return dueDateInput;
 }
-
-
 
 handleDueDateClick() {
   const mainContent = document.querySelector('.main-content');
