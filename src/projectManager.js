@@ -28,23 +28,17 @@ import { format } from 'date-fns';
     if (storedData) {
       const data = JSON.parse(storedData);
   
-      if (data.projectList.length === 0) {
-        const defaultProject = new Project('Default Project');
-        this.projectList.push(defaultProject);
-      } else {
-        this.projectList = data.projectList.map(projectData => {
-          const project = new Project(projectData.name);
+      this.projectList = data.projectList.map(projectData => {
+        const project = new Project(projectData.name);
   
-          projectData.toDoList.forEach(taskData => {
-            const newTask = new ToDoItem(taskData.title, taskData.description, taskData.dueDate, taskData.priority);
-            project.addToDoItem(newTask);
-            this.taskList.push(newTask);
-          });
-  
-          return project;
+        projectData.toDoList.forEach(taskData => {
+          project.addToDoItem(taskData.title, taskData.description, taskData.dueDate, taskData.priority);
+          this.taskList.push(taskData); 
         });
-      }
   
+        return project;
+      });
+
       if (data.selectedProject) {
         const storedSelectedProject = this.projectList.find(project => project.name === data.selectedProject);
         if (storedSelectedProject) {
@@ -53,7 +47,6 @@ import { format } from 'date-fns';
       }
     }
   }
-  
   
 
   refreshUI() {
