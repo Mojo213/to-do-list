@@ -15,6 +15,8 @@ projectManager.displayHomeProjectsTodo();
 projectManager.handleDueDateClick();
 projectManager.displayTodayTodoTasks();
 projectManager.displayWeekTodoTasks();
+projectManager.loadFromLocalStorage();
+projectManager.refreshUI();
 
 
 

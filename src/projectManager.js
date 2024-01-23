@@ -13,6 +13,91 @@ import { format } from 'date-fns';
     this.weekList = [];
   }
 
+  saveToLocalStorage() {
+    const data = {
+      projectList: this.projectList,
+      taskList: this.taskList,
+    };
+  
+    localStorage.setItem('todoAppData', JSON.stringify(data));
+  }
+  
+  loadFromLocalStorage() {
+    const storedData = localStorage.getItem('todoAppData');
+  
+    if (storedData) {
+      const data = JSON.parse(storedData);
+  
+      if (data.projectList.length === 0) {
+        const defaultProject = new Project('Default Project');
+        this.projectList.push(defaultProject);
+      } else {
+        this.projectList = data.projectList.map(projectData => {
+          const project = new Project(projectData.name);
+  
+          projectData.toDoList.forEach(taskData => {
+            const newTask = new ToDoItem(taskData.title, taskData.description, taskData.dueDate, taskData.priority);
+            project.addToDoItem(newTask);
+            this.taskList.push(newTask);
+          });
+  
+          return project;
+        });
+      }
+  
+      if (data.selectedProject) {
+        const storedSelectedProject = this.projectList.find(project => project.name === data.selectedProject);
+        if (storedSelectedProject) {
+          this.selectedProject = storedSelectedProject;
+        }
+      }
+    }
+  }
+  
+  
+
+  refreshUI() {
+    this.updateProjectListUI();
+    this.updateTaskListUI();
+  }
+
+  updateProjectListUI() {
+    const projectContainer = document.querySelector('.project-container');
+    document.querySelectorAll('.project-button').forEach(button => button.remove());
+  
+    this.projectList.forEach(project => {
+      const projectButton = this.createProjectButton(project);
+      const deleteButton = this.createDeleteProjectButton(project.name, projectButton);
+  
+      projectContainer.appendChild(projectButton);
+      projectContainer.appendChild(deleteButton);
+    });
+  }
+  
+
+  updateTaskListUI() {
+    const mainContent = document.querySelector('.main-content');
+    mainContent.innerHTML = ''; 
+
+    if (this.selectedProject) {
+      const projectNameDisplay = document.createElement('h1');
+      projectNameDisplay.textContent = this.selectedProject.name;
+
+      const todoTask = document.createElement('button');
+      todoTask.textContent = '+add task';
+      todoTask.className = 'add-todo-task';
+
+      mainContent.appendChild(projectNameDisplay);
+      mainContent.appendChild(todoTask);
+
+      this.selectedProject.toDoList.forEach(task => {
+        const toDoDiv = this.createToDoTaskElement(task);
+        mainContent.appendChild(toDoDiv);
+      });
+    }
+  }
+
+
   createProjectButton(project) {
     const projectButton = document.createElement('button');
     projectButton.textContent = project.name;
@@ -21,8 +106,7 @@ import { format } from 'date-fns';
     return projectButton;
   }
 
- 
-  createDeleteButton(projectName, projectButton) {
+  createDeleteProjectButton(projectName, projectButton) {
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
     deleteButton.className = 'delete-project-button';
@@ -31,7 +115,7 @@ import { format } from 'date-fns';
       this.deleteProject(projectName);
       projectButton.remove();
       deleteButton.remove();
-
+      this.saveToLocalStorage();
     });
 
     return deleteButton;
@@ -42,15 +126,6 @@ import { format } from 'date-fns';
     this.selectedProject = this.projectList.find(project => project.name === projectName);
 
   }
-
-  createDeleteTaskButton(toDoDiv) {
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'X';
-    deleteButton.className = 'delete-task';
-
-    return deleteButton;
-  }
-
 
   createProjectNameInput() {
     const projectNameDiv = document.createElement('div');
@@ -114,7 +189,7 @@ handleProjectButtonClick() {
           this.projectList.push(newProject);
 
           const projectButton = this.createProjectButton(newProject);
-          const deleteButton = this.createDeleteButton(capitalizedProjectName, projectButton);
+          const deleteButton = this.createDeleteProjectButton(capitalizedProjectName, projectButton);
       
           projectContainer.appendChild(projectButton);
           projectContainer.appendChild(deleteButton);
@@ -123,6 +198,7 @@ handleProjectButtonClick() {
       
           projectNameInput.value = '';
           projectNameDiv.classList.add('hide-input');
+          this.saveToLocalStorage()
           
         } else {
           alert('Project name already exists. Choose another Project name.');
@@ -281,9 +357,11 @@ handleProjectButtonClick() {
                 if (taskButtonClass === '.add-todo-task') {
                   this.selectedProject.toDoList.push(newToDoTask);
                   this.taskList.push(newToDoTask);
+                  this.saveToLocalStorage()
     
                 } else if (taskButtonClass === '.home-add-task-btn') {
                   this.taskList.push(newToDoTask);
+                  this.saveToLocalStorage()
                  
                 }
           
@@ -292,6 +370,7 @@ handleProjectButtonClick() {
           
                 this.addTaskForm.remove();
                 this.addTaskForm = null;
+                this.saveToLocalStorage()
               }
             } else {
               alert('Please ensure you have filled all fields.');
@@ -404,41 +483,42 @@ displayWeekTodoTasks() {
 
 createToDoTaskElement(task) {
   const toDoDiv = document.createElement('div');
-  const title = document.createElement('div');
-  const description = document.createElement('div');
-  const dueDate = document.createElement('div');
-
   toDoDiv.className = 'to-do-div';
-  title.className = 'to-do-header';
-  description.className = 'to-do-description';
-  dueDate.className = 'due-date';
 
-  title.textContent = task.title;
-  description.textContent = task.description;
-
-  const dueDateValue = new Date(task.dueDate);
-  if (!isNaN(dueDateValue.getTime())) {
-    dueDate.textContent = this.formatDate(dueDateValue);
-  } else {
-    dueDate.textContent = task.dueDate;
-  }
+  const title = this.createTaskElement('to-do-header', task.title);
+  const description = this.createTaskElement('to-do-description', task.description);
+  const dueDate = this.createTaskElement('due-date', this.formatDate(new Date(task.dueDate)));
 
   toDoDiv.style.backgroundColor = this.setPriorityColor(task.priority);
 
   toDoDiv.appendChild(title);
   toDoDiv.appendChild(description);
   toDoDiv.appendChild(dueDate);
-
   
   const deleteButton = this.createDeleteTaskButton(toDoDiv);
+  deleteButton.addEventListener('click', () => this.deleteTask());
+  toDoDiv.appendChild(deleteButton);
+
+  return toDoDiv;
+}
+
+createTaskElement(className, textContent) {
+  const element = document.createElement('div');
+  element.className = className;
+  element.textContent = textContent;
+  return element;
+}
+
+createDeleteTaskButton() {
+  const deleteButton = document.createElement('button');
+  deleteButton.textContent = 'X';
+  deleteButton.className = 'delete-task';
 
   deleteButton.addEventListener('click', () => {
     this.deleteTask();
   });
 
-  toDoDiv.appendChild(deleteButton);
-
-  return toDoDiv;
+  return deleteButton;
 }
 
 
@@ -520,6 +600,7 @@ handleDueDateClick() {
           dateDiv.replaceWith(dueDateInput);
 
           dueDateInput.focus();
+          this.saveToLocalStorage();
         }
       }
     }
@@ -556,10 +637,9 @@ deleteProject(projectName) {
     this.taskList = this.taskList.filter(task => !deletedProject.toDoList.some(projectTask => projectTask.title === task.title));
 
     mainContent.innerHTML = '';
+    this.saveToLocalStorage();
   }
 }
-
-
 
 }
  
