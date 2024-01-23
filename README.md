@@ -24,7 +24,8 @@ This project is a simple todo application that helps users manage their tasks an
 
 ### Skills Demonstrated
 
-- **JavaScript:** Proficient use of vanilla JavaScript for frontend functionalities.
+- **JavaScript:** Proficient use of vanilla JavaScript for frontend and backend functionalities.
+- **LocalStorage to store user data locally. 
 - **Object-Oriented Programming (OOP):** Classes like `Project`, `ToDoItem`, and `ProjectManager` encapsulate data and behavior effectively.
 - **DOM Manipulation:** Extensive manipulation of the Document Object Model to render project and task information dynamically.
 - **Event Handling:** Implementation of event listeners for various user interactions.
