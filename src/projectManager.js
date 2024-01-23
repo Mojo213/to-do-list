@@ -29,22 +29,25 @@ import { format } from 'date-fns';
       const data = JSON.parse(storedData);
   
       this.taskList = [];
+      this.projectList = [];
   
-      this.projectList = data.projectList.map(projectData => {
+      data.projectList.forEach(projectData => {
         const project = new Project(projectData.name);
   
         projectData.toDoList.forEach(taskData => {
           project.addToDoItem(taskData.title, taskData.description, taskData.dueDate, taskData.priority);
-          this.taskList.push(taskData); 
+          this.taskList.push(taskData);
+          console.log(this.taskList);
         });
   
-        return project;
+        this.projectList.push(project);
+        console.log(this.projectList);
       });
   
-    
       data.taskList.forEach(taskData => {
         if (!this.projectList.some(project => project.toDoList.some(task => task.title === taskData.title))) {
           this.taskList.push(taskData);
+          console.log(this.taskList);
         }
       });
     }
