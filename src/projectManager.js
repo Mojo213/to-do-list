@@ -28,6 +28,8 @@ import { format } from 'date-fns';
     if (storedData) {
       const data = JSON.parse(storedData);
   
+      this.taskList = [];
+  
       this.projectList = data.projectList.map(projectData => {
         const project = new Project(projectData.name);
   
@@ -38,20 +40,21 @@ import { format } from 'date-fns';
   
         return project;
       });
-
-      if (data.selectedProject) {
-        const storedSelectedProject = this.projectList.find(project => project.name === data.selectedProject);
-        if (storedSelectedProject) {
-          this.selectedProject = storedSelectedProject;
+  
+    
+      data.taskList.forEach(taskData => {
+        if (!this.projectList.some(project => project.toDoList.some(task => task.title === taskData.title))) {
+          this.taskList.push(taskData);
         }
-      }
+      });
     }
   }
+  
   
 
   refreshUI() {
     this.updateProjectListUI();
-    this.updateTaskListUI();
+
   }
 
   updateProjectListUI() {
@@ -67,28 +70,6 @@ import { format } from 'date-fns';
     });
   }
   
-
-  updateTaskListUI() {
-    const mainContent = document.querySelector('.main-content');
-    mainContent.innerHTML = ''; 
-
-    if (this.selectedProject) {
-      const projectNameDisplay = document.createElement('h1');
-      projectNameDisplay.textContent = this.selectedProject.name;
-
-      const todoTask = document.createElement('button');
-      todoTask.textContent = '+add task';
-      todoTask.className = 'add-todo-task';
-
-      mainContent.appendChild(projectNameDisplay);
-      mainContent.appendChild(todoTask);
-
-      this.selectedProject.toDoList.forEach(task => {
-        const toDoDiv = this.createToDoTaskElement(task);
-        mainContent.appendChild(toDoDiv);
-      });
-    }
-  }
 
 
   createProjectButton(project) {
@@ -563,6 +544,7 @@ createDueDateInput(dueDateValue, task) {
       updatedDueDateDiv.className = 'due-date';
       updatedDueDateDiv.textContent = formattedDueDate; 
       dueDateInput.replaceWith(updatedDueDateDiv);
+      this.saveToLocalStorage();
     }
   });
 
