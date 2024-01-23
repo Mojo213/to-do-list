@@ -120,6 +120,15 @@ import { format } from 'date-fns';
 
   }
 
+  createDeleteTaskButton() {
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'X';
+    deleteButton.className = 'delete-task';
+
+    return deleteButton;
+  }
+
+
   createProjectNameInput() {
     const projectNameDiv = document.createElement('div');
     const projectNameForm = document.createElement('form');
@@ -488,24 +497,7 @@ createToDoTaskElement(task) {
   toDoDiv.appendChild(description);
   toDoDiv.appendChild(dueDate);
   
-  const deleteButton = this.createDeleteTaskButton(toDoDiv);
-  deleteButton.addEventListener('click', () => this.deleteTask());
-  toDoDiv.appendChild(deleteButton);
-
-  return toDoDiv;
-}
-
-createTaskElement(className, textContent) {
-  const element = document.createElement('div');
-  element.className = className;
-  element.textContent = textContent;
-  return element;
-}
-
-createDeleteTaskButton() {
-  const deleteButton = document.createElement('button');
-  deleteButton.textContent = 'X';
-  deleteButton.className = 'delete-task';
+  const deleteButton = this.createDeleteTaskButton();
 
   deleteButton.addEventListener('click', () => {
     this.deleteTask();
