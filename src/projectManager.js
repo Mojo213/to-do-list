@@ -278,7 +278,7 @@ createTodoTaskForm() {
 
   return todoDiv;
 }
-reateTodoTaskForm() {
+createTodoTaskForm() {
   const todoDiv = document.createElement('div');
   const todoForm = document.createElement('form');
   const todoNameLabel = document.createElement('label');
@@ -299,7 +299,7 @@ reateTodoTaskForm() {
   todoNameLabel.setAttribute('for', 'task-name');
   todoNameInput.id = 'task-name';
   todoNameInput.placeholder = 'Task name';
-  todoNameInput.maxLength = 15;
+  todoNameInput.maxLength = 13;
   todoNameInput.required = true;
   todoDescLabel.setAttribute('for', 'description');
   todoDescInput.id = 'description';
@@ -322,9 +322,6 @@ reateTodoTaskForm() {
   addBtn.className = 'add-button';
   cancelBtn.textContent = 'Cancel';
   cancelBtn.className = 'cancel-button';
-
-  // Add pattern attribute for date format validation
-  todoDueDateInput.pattern = '\\d{4}-\\d{2}-\\d{2}';
 
   todoDiv.appendChild(todoForm);
   todoForm.appendChild(todoNameLabel);
