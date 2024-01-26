@@ -112,6 +112,7 @@ import { format } from 'date-fns';
     prjNameLabel.setAttribute('for', 'project-name');
     prjNameInput.id = 'project-name';
     prjNameInput.placeholder = 'Project name';
+    prjNameInput.maxLength = 15;
     addBtn.textContent = 'Add';
     cancelBtn.textContent = 'Cancel';
 
@@ -215,67 +216,134 @@ handleProjectButtonClick() {
     });
   }
 
-  createTodoTaskForm() {
-    const todoDiv = document.createElement('div');
-    const todoForm = document.createElement('form');
-    const todoNameLabel = document.createElement('label');
-    const todoNameInput = document.createElement('input');
-    const todoDescLabel = document.createElement('label');
-    const todoDescInput = document.createElement('textarea');
-    const todoDueDateLabel = document.createElement('label');
-    const todoDueDateInput = document.createElement('input');
-    const todoPriorityLabel = document.createElement('label');
-    const todoPriorityInput = document.createElement('select');
-    const priorityValueLow = document.createElement('option');
-    const priorityValueMed = document.createElement('option');
-    const priorityValueHigh = document.createElement('option');
-    const addBtn = document.createElement('button');
-    const cancelBtn = document.createElement('button');
+createTodoTaskForm() {
+  const todoDiv = document.createElement('div');
+  const todoForm = document.createElement('form');
+  const todoNameLabel = document.createElement('label');
+  const todoNameInput = document.createElement('input');
+  const todoDescLabel = document.createElement('label');
+  const todoDescInput = document.createElement('textarea');
+  const todoDueDateLabel = document.createElement('label');
+  const todoDueDateInput = document.createElement('input');
+  const todoPriorityLabel = document.createElement('label');
+  const todoPriorityInput = document.createElement('select');
+  const priorityValueLow = document.createElement('option');
+  const priorityValueMed = document.createElement('option');
+  const priorityValueHigh = document.createElement('option');
+  const addBtn = document.createElement('button');
+  const cancelBtn = document.createElement('button');
 
-    todoDiv.className = 'add-task-form';
-    todoNameLabel.setAttribute('for', 'task-name');
-    todoNameInput.id = 'task-name';
-    todoNameInput.placeholder = 'Task name';
-    todoNameInput.required = true;
-    todoDescLabel.setAttribute('for', 'description');
-    todoDescInput.id = 'description';
-    todoDescInput.placeholder = 'Task description';
-    todoDescInput.required = true;
-    todoDueDateLabel.setAttribute('for', 'due-date');
-    todoDueDateInput.id = 'due-date';
-    todoDueDateInput.type = 'date';
-    todoDueDateInput.required = true;
-    todoPriorityLabel.setAttribute('for', 'priority');
-    todoPriorityInput.id = 'priority';
-    priorityValueLow.className = 'priority-low';
-    priorityValueLow.textContent = 'Low';
-    priorityValueMed.className = 'priority-med';
-    priorityValueMed.textContent = 'Medium';
-    priorityValueHigh.className = 'priority-high';
-    priorityValueHigh.textContent = 'High';
-    todoPriorityInput.required = true;
-    addBtn.textContent = 'Add';
-    addBtn.className = 'add-button';
-    cancelBtn.textContent = 'Cancel';
-    cancelBtn.className = 'cancel-button';
+  todoDiv.className = 'add-task-form';
+  todoNameLabel.setAttribute('for', 'task-name');
+  todoNameInput.id = 'task-name';
+  todoNameInput.placeholder = 'Task name';
+  todoNameInput.maxLength = 15;
+  todoNameInput.required = true;
+  todoDescLabel.setAttribute('for', 'description');
+  todoDescInput.id = 'description';
+  todoDescInput.placeholder = 'Task description';
+  todoDescInput.required = true;
+  todoDueDateLabel.setAttribute('for', 'due-date');
+  todoDueDateInput.id = 'due-date';
+  todoDueDateInput.type = 'date';
+  todoDueDateInput.required = true;
+  todoPriorityLabel.setAttribute('for', 'priority');
+  todoPriorityInput.id = 'priority';
+  priorityValueLow.className = 'priority-low';
+  priorityValueLow.textContent = 'Low';
+  priorityValueMed.className = 'priority-med';
+  priorityValueMed.textContent = 'Medium';
+  priorityValueHigh.className = 'priority-high';
+  priorityValueHigh.textContent = 'High';
+  todoPriorityInput.required = true;
+  addBtn.textContent = 'Add';
+  addBtn.className = 'add-button';
+  cancelBtn.textContent = 'Cancel';
+  cancelBtn.className = 'cancel-button';
 
-    todoDiv.appendChild(todoForm);
-    todoForm.appendChild(todoNameLabel);
-    todoForm.appendChild(todoNameInput);
-    todoForm.appendChild(todoDescLabel);
-    todoForm.appendChild(todoDescInput);
-    todoForm.appendChild(todoDueDateLabel);
-    todoForm.appendChild(todoDueDateInput);
-    todoForm.appendChild(todoPriorityLabel);
-    todoForm.appendChild(todoPriorityInput);
-    todoPriorityInput.appendChild(priorityValueLow);
-    todoPriorityInput.appendChild(priorityValueMed);
-    todoPriorityInput.appendChild(priorityValueHigh);
-    todoForm.appendChild(addBtn);
-    todoForm.appendChild(cancelBtn);
+  todoDiv.appendChild(todoForm);
+  todoForm.appendChild(todoNameLabel);
+  todoForm.appendChild(todoNameInput);
+  todoForm.appendChild(todoDescLabel);
+  todoForm.appendChild(todoDescInput);
+  todoForm.appendChild(todoDueDateLabel);
+  todoForm.appendChild(todoDueDateInput);
+  todoForm.appendChild(todoPriorityLabel);
+  todoForm.appendChild(todoPriorityInput);
+  todoPriorityInput.appendChild(priorityValueLow);
+  todoPriorityInput.appendChild(priorityValueMed);
+  todoPriorityInput.appendChild(priorityValueHigh);
+  todoForm.appendChild(addBtn);
+  todoForm.appendChild(cancelBtn);
 
-    return todoDiv;
-  }
+  return todoDiv;
+}
+reateTodoTaskForm() {
+  const todoDiv = document.createElement('div');
+  const todoForm = document.createElement('form');
+  const todoNameLabel = document.createElement('label');
+  const todoNameInput = document.createElement('input');
+  const todoDescLabel = document.createElement('label');
+  const todoDescInput = document.createElement('textarea');
+  const todoDueDateLabel = document.createElement('label');
+  const todoDueDateInput = document.createElement('input');
+  const todoPriorityLabel = document.createElement('label');
+  const todoPriorityInput = document.createElement('select');
+  const priorityValueLow = document.createElement('option');
+  const priorityValueMed = document.createElement('option');
+  const priorityValueHigh = document.createElement('option');
+  const addBtn = document.createElement('button');
+  const cancelBtn = document.createElement('button');
+
+  todoDiv.className = 'add-task-form';
+  todoNameLabel.setAttribute('for', 'task-name');
+  todoNameInput.id = 'task-name';
+  todoNameInput.placeholder = 'Task name';
+  todoNameInput.maxLength = 15;
+  todoNameInput.required = true;
+  todoDescLabel.setAttribute('for', 'description');
+  todoDescInput.id = 'description';
+  todoDescInput.placeholder = 'Task description';
+  todoDescInput.required = true;
+  todoDueDateLabel.setAttribute('for', 'due-date');
+  todoDueDateInput.id = 'due-date';
+  todoDueDateInput.type = 'date';
+  todoDueDateInput.required = true;
+  todoPriorityLabel.setAttribute('for', 'priority');
+  todoPriorityInput.id = 'priority';
+  priorityValueLow.className = 'priority-low';
+  priorityValueLow.textContent = 'Low';
+  priorityValueMed.className = 'priority-med';
+  priorityValueMed.textContent = 'Medium';
+  priorityValueHigh.className = 'priority-high';
+  priorityValueHigh.textContent = 'High';
+  todoPriorityInput.required = true;
+  addBtn.textContent = 'Add';
+  addBtn.className = 'add-button';
+  cancelBtn.textContent = 'Cancel';
+  cancelBtn.className = 'cancel-button';
+
+  // Add pattern attribute for date format validation
+  todoDueDateInput.pattern = '\\d{4}-\\d{2}-\\d{2}';
+
+  todoDiv.appendChild(todoForm);
+  todoForm.appendChild(todoNameLabel);
+  todoForm.appendChild(todoNameInput);
+  todoForm.appendChild(todoDescLabel);
+  todoForm.appendChild(todoDescInput);
+  todoForm.appendChild(todoDueDateLabel);
+  todoForm.appendChild(todoDueDateInput);
+  todoForm.appendChild(todoPriorityLabel);
+  todoForm.appendChild(todoPriorityInput);
+  todoPriorityInput.appendChild(priorityValueLow);
+  todoPriorityInput.appendChild(priorityValueMed);
+  todoPriorityInput.appendChild(priorityValueHigh);
+  todoForm.appendChild(addBtn);
+  todoForm.appendChild(cancelBtn);
+
+  return todoDiv;
+}
+
 
   handleAddTaskClick(taskButtonClass) {
     const mainContent = document.querySelector('.main-content');
@@ -497,7 +565,7 @@ deleteTask(){
    if (toDoDiv && toDoDiv.classList.contains('to-do-div')){
       const taskTitle = toDoDiv.querySelector('.to-do-header').textContent.trim();
       const indexOfItem = this.taskList.findIndex((task) => taskTitle === task.title);
-
+      
     for (const project of this.projectList) {
       const indexOfProjectTask =  project.toDoList.findIndex((Task) => Task.title === taskTitle);
       if (indexOfProjectTask !== -1) {
@@ -513,6 +581,7 @@ deleteTask(){
       } 
      
     }
+    this.saveToLocalStorage();
   }    
 
   })
